@@ -6,7 +6,7 @@
 //  Copyright © 2016年 YISHANG. All rights reserved.
 //
 
-#import "BKScanCardViewController.h"
+#import "MSQScanCardViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import <Masonry.h>
 #import "CJCategory.h"
@@ -17,7 +17,7 @@
 
 #define COLOR_14 [UIColor fromHexValue:0x03B598] //BESTKEEP绿
 
-@interface BKScanCardViewController ()<AVCaptureMetadataOutputObjectsDelegate>
+@interface MSQScanCardViewController ()<AVCaptureMetadataOutputObjectsDelegate>
 
 @property(nonatomic, assign) BOOL isReading;
 
@@ -50,7 +50,7 @@
 
 @end
 
-@implementation BKScanCardViewController
+@implementation MSQScanCardViewController
 
 #pragma mark ----------懒加载，防止重复创建-----------
 - (UIView *)saoView {

@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "BKScanCardViewController.h"
+#import "MSQScanCardViewController.h"
 
 @interface ViewController ()
 
@@ -26,7 +26,7 @@
 }
 - (IBAction)openScanCardVC:(UIButton *)sender {
     
-    BKScanCardViewController *scanCardVC = [[BKScanCardViewController alloc] init];
+    MSQScanCardViewController *scanCardVC = [[MSQScanCardViewController alloc] init];
     
     [self.navigationController pushViewController:scanCardVC animated:YES];
 }

@@ -13,7 +13,7 @@
 		72955CD01D1A22E000FEC2AD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 72955CCE1D1A22E000FEC2AD /* Main.storyboard */; };
 		72955CD21D1A22E000FEC2AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72955CD11D1A22E000FEC2AD /* Assets.xcassets */; };
 		72955CD51D1A22E000FEC2AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 72955CD31D1A22E000FEC2AD /* LaunchScreen.storyboard */; };
-		72955CDF1D1A234F00FEC2AD /* BKScanCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72955CDE1D1A234F00FEC2AD /* BKScanCardViewController.m */; };
+		72955CDF1D1A234F00FEC2AD /* MSQScanCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72955CDE1D1A234F00FEC2AD /* MSQScanCardViewController.m */; };
 		72955CE11D1A237300FEC2AD /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72955CE01D1A237300FEC2AD /* AVFoundation.framework */; };
 		72955CE81D1A26FC00FEC2AD /* NSString+CJCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 72955CE51D1A26FC00FEC2AD /* NSString+CJCategory.m */; };
 		72955CE91D1A26FC00FEC2AD /* UIColor+CJCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 72955CE71D1A26FC00FEC2AD /* UIColor+CJCategory.m */; };
@@ -33,8 +33,8 @@
 		72955CD11D1A22E000FEC2AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		72955CD41D1A22E000FEC2AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		72955CD61D1A22E000FEC2AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		72955CDD1D1A234F00FEC2AD /* BKScanCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKScanCardViewController.h; sourceTree = "<group>"; };
-		72955CDE1D1A234F00FEC2AD /* BKScanCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKScanCardViewController.m; sourceTree = "<group>"; };
+		72955CDD1D1A234F00FEC2AD /* MSQScanCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSQScanCardViewController.h; sourceTree = "<group>"; };
+		72955CDE1D1A234F00FEC2AD /* MSQScanCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSQScanCardViewController.m; sourceTree = "<group>"; };
 		72955CE01D1A237300FEC2AD /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		72955CE31D1A26FC00FEC2AD /* CJCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJCategory.h; sourceTree = "<group>"; };
 		72955CE41D1A26FC00FEC2AD /* NSString+CJCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CJCategory.h"; sourceTree = "<group>"; };
@@ -105,8 +105,8 @@
 		72955CDC1D1A233600FEC2AD /* 扫一扫VC */ = {
 			isa = PBXGroup;
 			children = (
-				72955CDD1D1A234F00FEC2AD /* BKScanCardViewController.h */,
-				72955CDE1D1A234F00FEC2AD /* BKScanCardViewController.m */,
+				72955CDD1D1A234F00FEC2AD /* MSQScanCardViewController.h */,
+				72955CDE1D1A234F00FEC2AD /* MSQScanCardViewController.m */,
 			);
 			path = "扫一扫VC";
 			sourceTree = "<group>";
@@ -263,7 +263,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				72955CE91D1A26FC00FEC2AD /* UIColor+CJCategory.m in Sources */,
-				72955CDF1D1A234F00FEC2AD /* BKScanCardViewController.m in Sources */,
+				72955CDF1D1A234F00FEC2AD /* MSQScanCardViewController.m in Sources */,
 				72955CCD1D1A22E000FEC2AD /* ViewController.m in Sources */,
 				72955CCA1D1A22E000FEC2AD /* AppDelegate.m in Sources */,
 				72955CE81D1A26FC00FEC2AD /* NSString+CJCategory.m in Sources */,

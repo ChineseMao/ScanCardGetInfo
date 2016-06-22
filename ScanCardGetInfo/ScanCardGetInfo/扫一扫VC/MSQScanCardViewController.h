@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BKScanCardViewController : UIViewController
+@interface MSQScanCardViewController : UIViewController
 
 @end
