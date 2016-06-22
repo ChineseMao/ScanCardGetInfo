@@ -1,0 +1,13 @@
+PODS:
+  - LBProgressHUD (1.0.1)
+  - Masonry (1.0.1)
+
+DEPENDENCIES:
+  - LBProgressHUD (~> 1.0.1)
+  - Masonry (~> 1.0.1)
+
+SPEC CHECKSUMS:
+  LBProgressHUD: d55bc6c1b966032e59fc01ed3544fddec40fd6e1
+  Masonry: a1a931a0d08870ed8ae415a2ea5ea68ebcac77df
+
+COCOAPODS: 0.39.0
