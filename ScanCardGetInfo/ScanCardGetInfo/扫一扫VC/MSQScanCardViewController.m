@@ -104,7 +104,7 @@
         //画中间的基准线
         _line = [[UIImageView alloc] initWithFrame:CGRectMake(IPHONE_WIDTH/6+5, IPHONE_HEIGHT/4, IPHONE_WIDTH/3*2-10, 12)];
         [_line setImage:[UIImage imageNamed:@"QRCodeLine"]];
-        _line.backgroundColor = COLOR_14;
+//        _line.backgroundColor = COLOR_14;
     }
     return _line;
 }
