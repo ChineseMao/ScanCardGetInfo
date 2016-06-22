@@ -109,7 +109,16 @@
     return _line;
 }
 
--(AVCaptureMetadataOutput *)output {
+- (AVCaptureDeviceInput *)input {  //  1
+    
+    if (!_input) {
+        //用Device创建输入流  捕捉完结内容 到设备中 也就是手机
+        AVCaptureDevice * device = [AVCaptureDevice defaultDeviceWithMediaType: AVMediaTypeVideo];
+        _input = [AVCaptureDeviceInput deviceInputWithDevice: device error: nil];
+    }
+    return _input;
+}
+-(AVCaptureMetadataOutput *)output {   //  2
     
     if (!_output) {
         //创建媒体数据输出流
@@ -118,11 +127,11 @@
         [_output setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
         
         _output.rectOfInterest = CGRectMake(0.1, 0.1, 0.8, 0.8);
-
+        
     }
     return _output;
 }
-- (AVCaptureSession *)captureSession {
+- (AVCaptureSession *)captureSession {   //  3
     
     if (!_captureSession) {
         // 4.   实例化捕捉绘画
@@ -130,12 +139,10 @@
         
         // 4.1  设置绘画的采集率 属性 决定了
         [_captureSession setSessionPreset:AVCaptureSessionPreset3840x2160];
-        
-        [self setupIODevice];
     }
     return _captureSession;
 }
--(AVCaptureVideoPreviewLayer *)videoPreviewLayer {
+-(AVCaptureVideoPreviewLayer *)videoPreviewLayer {   //   4
     
     if (!_videoPreviewLayer) {
         //实例化
@@ -156,19 +163,7 @@
     }
     return _boxView;
 }
-- (AVCaptureDeviceInput *)input {
-    
-    if (!_input) {
-         //用Device创建输入流  捕捉完结内容 到设备中 也就是手机
-        AVCaptureDevice * device = [AVCaptureDevice defaultDeviceWithMediaType: AVMediaTypeVideo];
-        NSError *error = nil;
-        _input = [AVCaptureDeviceInput deviceInputWithDevice: device error: &error];
-        if (error) {
-            [self alertViewWithMessage:@"请打开摄像头"];
-        }
-    }
-    return _input;
-}
+
 
 #pragma mark -------视图生命周期---------
 
@@ -194,8 +189,7 @@
     [self.navigationController.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.clipsToBounds = YES;
     
-    [LBProgressHUD showHUDto:self.view animated:YES];
-//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"灯光" style:UIBarButtonItemStylePlain target:self action:@selector(openLight)];
+    //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"灯光" style:UIBarButtonItemStylePlain target:self action:@selector(openLight)];
     //UIBarButtonItem *leftButton = [[UIBarButtonItem alloc]initWithCustomView:button];
     //添加按钮到BarButton
     _Button = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -219,11 +213,6 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
     _isReading = NO;
     if ([self startReading]) {
         
@@ -238,8 +227,14 @@
     }else {
         
         [LBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [self alertViewWithMessage:@"打开失败，请检查"];
+        [self alertViewWithMessage:@"请打开摄像头" title:@"友情提示" object:nil];
     }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [LBProgressHUD showHUDto:self.view animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -249,22 +244,52 @@
 
 #pragma mark ---------方法-----------
 
-- (void)alertViewWithMessage:(NSString *)message {
+- (void)alertViewWithMessage:(NSString *)message title:(NSString *)title object:(AVMetadataMachineReadableCodeObject *)object{
     
-    UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"友情提示" message:message preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *alertAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    
+    UIAlertController *alertC = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *alertAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         
         if ([message isEqualToString:@"请打开摄像头"]) {
             
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }];
+    
+    UIAlertAction *alertOpenAction = [UIAlertAction actionWithTitle:@"打开" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        if ([message isEqualToString:@"请打开摄像头"]) {
+            
+            NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+            if ([[UIApplication sharedApplication] canOpenURL:url]) {
+                [[UIApplication sharedApplication] openURL:url];
+                
+                [self.navigationController popViewControllerAnimated:YES];
+            }else {
+                
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        }else {
+            
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:object.stringValue]];
+            [self.navigationController popViewControllerAnimated:YES];
         }
     }];
     
     [alertC addAction:alertAction];
+    [alertC addAction:alertOpenAction];
     [self presentViewController:alertC animated:YES completion:nil];
+    
 }
 
 - (BOOL)startReading{
+    
+    if ([self setupIODevice]) {
+        
+    }else {
+        
+        return NO;
+    }
     
     [self.view.layer insertSublayer:self.videoPreviewLayer atIndex:0];
     [self.view addSubview:self.boxView];
@@ -281,18 +306,29 @@
 /**
  *  配置输入输出设置
  */
-- (void)setupIODevice
+- (BOOL)setupIODevice
 {
     if ([self.captureSession canAddInput: self.input]) {
         //将输入流添加到绘画
         [_captureSession addInput: _input];
+        
+        if ([self.captureSession canAddOutput: self.output]) {
+            //将输出流添加到绘画
+            [_captureSession addOutput: _output];
+            //设置媒体数据类型 二维码和条形码
+            _output.metadataObjectTypes = @[AVMetadataObjectTypeQRCode, AVMetadataObjectTypeEAN13Code];
+            
+            return YES;
+            
+        }else {
+            
+             return NO;
+        }
+    }else {
+        
+        return NO;
     }
-    if ([self.captureSession canAddOutput: self.output]) {
-        //将输出流添加到绘画
-        [_captureSession addOutput: _output];
-        //设置媒体数据类型 二维码和条形码
-        _output.metadataObjectTypes = @[AVMetadataObjectTypeQRCode, AVMetadataObjectTypeEAN13Code];
-    }
+    
 }
 
 /**
@@ -310,30 +346,18 @@
             NSString *urlStr = [object stringValue];
             if ([urlStr hasPrefix:@"http"]) {
                 
-                UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"可能存在风险，是否打开" message:urlStr preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction *alertAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                    
-                }];
-                
-                UIAlertAction *alertOpenAction = [UIAlertAction actionWithTitle:@"打开链接" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    
-                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:object.stringValue]];
-                }];
-               
-                [alertC addAction:alertAction];
-                [alertC addAction:alertOpenAction];
-                [self presentViewController:alertC animated:YES completion:nil];
+                [self alertViewWithMessage:urlStr title:@"可能存在风险，是否打开" object:object];
                 
             }else {
                 
-//                GoodsDetailController  *goodsDetailVc = [[GoodsDetailController alloc]init];
-//                // goodsDetailVc.goods_Id = [object stringValue];
-//                goodsDetailVc.goods_Id = @"Ujyug0u7QzegugYW0QALqw";
-//                [self.navigationController  pushViewController:goodsDetailVc  animated:YES];
-//                
-//                [self performSelectorOnMainThread:@selector(stopReading) withObject:nil waitUntilDone:NO];
+                //                GoodsDetailController  *goodsDetailVc = [[GoodsDetailController alloc]init];
+                //                // goodsDetailVc.goods_Id = [object stringValue];
+                //                goodsDetailVc.goods_Id = @"Ujyug0u7QzegugYW0QALqw";
+                //                [self.navigationController  pushViewController:goodsDetailVc  animated:YES];
+                //
+                //                [self performSelectorOnMainThread:@selector(stopReading) withObject:nil waitUntilDone:NO];
             }
-
+            
         }
     }
 }
@@ -341,11 +365,6 @@
 - (void)stopReading{
     //结束扫描
     [self.captureSession stopRunning];
-//    //将预览图层滞空
-//    self.captureSession = nil;
-//    //移除预览图层
-//    [self.line removeFromSuperview];
-//    [self.videoPreviewLayer removeFromSuperlayer];
 }
 
 - (void)moveScanLayer {
@@ -392,7 +411,7 @@
             flag = !flag;
         }
     }
-
+    
 }
 
 //打开或关闭闪光灯
@@ -456,13 +475,13 @@
     return maskLayer;
 }
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
