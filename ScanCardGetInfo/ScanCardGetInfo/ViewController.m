@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "MSQScanCardViewController.h"
+#import "AppDelegate.h"
 
 @interface ViewController ()
 
@@ -17,7 +18,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+//    UIApplicationShortcutIconTypeAdd
     // Do any additional setup after loading the view, typically from a nib.
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    if ([appDelegate.intoScanCard isEqualToString:@"scanCard"]) {
+        
+        [self performSelector:@selector(openScanCardVC:) withObject:nil afterDelay:1];
+        appDelegate.intoScanCard = nil;
+    }
 }
 
 - (void)didReceiveMemoryWarning {

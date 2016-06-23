@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		723A4F4F1D1B9E7300649673 /* Unknown.png in Resources */ = {isa = PBXBuildFile; fileRef = 723A4F4E1D1B9E7300649673 /* Unknown.png */; };
 		72955CC71D1A22E000FEC2AD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 72955CC61D1A22E000FEC2AD /* main.m */; };
 		72955CCA1D1A22E000FEC2AD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 72955CC91D1A22E000FEC2AD /* AppDelegate.m */; };
 		72955CCD1D1A22E000FEC2AD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 72955CCC1D1A22E000FEC2AD /* ViewController.m */; };
@@ -23,6 +24,7 @@
 /* Begin PBXFileReference section */
 		04BBD6429A4F709ED768AAB9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A6E59CF0A1E7422DD983ECB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		723A4F4E1D1B9E7300649673 /* Unknown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Unknown.png; sourceTree = "<group>"; };
 		72955CC21D1A22E000FEC2AD /* ScanCardGetInfo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScanCardGetInfo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		72955CC61D1A22E000FEC2AD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		72955CC81D1A22E000FEC2AD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 			children = (
 				72955CDD1D1A234F00FEC2AD /* MSQScanCardViewController.h */,
 				72955CDE1D1A234F00FEC2AD /* MSQScanCardViewController.m */,
+				723A4F4E1D1B9E7300649673 /* Unknown.png */,
 			);
 			path = "扫一扫VC";
 			sourceTree = "<group>";
@@ -203,6 +206,7 @@
 			files = (
 				72955CD51D1A22E000FEC2AD /* LaunchScreen.storyboard in Resources */,
 				72955CD21D1A22E000FEC2AD /* Assets.xcassets in Resources */,
+				723A4F4F1D1B9E7300649673 /* Unknown.png in Resources */,
 				72955CD01D1A22E000FEC2AD /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

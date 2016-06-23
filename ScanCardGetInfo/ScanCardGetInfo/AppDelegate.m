@@ -17,7 +17,34 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [self creatShortcutItem];
+    
+    UIApplicationShortcutItem *shortcutItem = [launchOptions valueForKey:UIApplicationLaunchOptionsShortcutItemKey];
+    
+    if (shortcutItem) {  //从快捷键进入系统，
+        
+        if ([shortcutItem.type isEqualToString:@"scanCard"]) {
+            
+            //扫一扫 快捷键进入
+            self.intoScanCard = @"scanCard";
+        }
+    }
     return YES;
+}
+
+//创建3D touch应用图标上的
+- (void)creatShortcutItem {
+    
+    //创建系统风格icon
+//    UIApplicationShortcutIcon *icon = [UIApplicationShortcutIcon iconWithType:UIApplicationShortcutIconTypeLove];
+    
+    //创建自定义的icon 图标
+    UIApplicationShortcutIcon *icon = [UIApplicationShortcutIcon iconWithTemplateImageName:@"Unknown.png"];
+    //创建快捷选项
+    UIApplicationShortcutItem *item = [[UIApplicationShortcutItem alloc] initWithType:@"scanCard" localizedTitle:@"扫一扫" localizedSubtitle:nil icon:icon userInfo:nil];
+    //添加到快捷选项中
+    [UIApplication sharedApplication].shortcutItems = @[item];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
