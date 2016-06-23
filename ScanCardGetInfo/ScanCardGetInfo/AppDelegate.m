@@ -30,7 +30,8 @@
             self.intoScanCard = @"scanCard";
         }
     }
-    return YES;
+
+       return YES;
 }
 
 //创建3D touch应用图标上的
@@ -62,7 +63,26 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+    
+//    UIApplicationShortcutItem *shortcutItem = [application setShortcutItems:<#(NSArray<UIApplicationShortcutItem *> * _Nullable)#>]
+//    if (<#condition#>) {
+//        <#statements#>
+//    }
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+}
+
+//通过 Called when the user activates your application by selecting a shortcut on the home screen
+- (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler {
+    
+    if (shortcutItem) {  //从快捷键进入系统，
+        
+        if ([shortcutItem.type isEqualToString:@"scanCard"]) {
+            
+            //扫一扫 快捷键进入
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"scanCard" object:self];
+        }
+    }
+
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

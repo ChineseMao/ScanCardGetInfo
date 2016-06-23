@@ -18,8 +18,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    UIApplicationShortcutIconTypeAdd
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openScanCardVC:) name:@"scanCard" object:nil];
     // Do any additional setup after loading the view, typically from a nib.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
