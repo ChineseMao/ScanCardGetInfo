@@ -126,7 +126,7 @@
         //设置代理来处理输出流中的信息
         [_output setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
         
-        _output.rectOfInterest = CGRectMake(0.1, 0.1, 0.8, 0.8);
+        _output.rectOfInterest = [self getRectOfInterestWithFrame:CGRectMake(IPHONE_WIDTH/6, IPHONE_HEIGHT/4, IPHONE_WIDTH/3*2, IPHONE_WIDTH/3*2)];
         
     }
     return _output;
@@ -138,7 +138,7 @@
         _captureSession = [[AVCaptureSession alloc] init];
         
         // 4.1  设置绘画的采集率 属性 决定了
-        [_captureSession setSessionPreset:AVCaptureSessionPreset3840x2160];
+        [_captureSession setSessionPreset:AVCaptureSessionPreset1920x1080];
     }
     return _captureSession;
 }
@@ -439,6 +439,23 @@
         }
     }
     _isReading = !_isReading;
+}
+
+//生成rectOfInterest
+- (CGRect)getRectOfInterestWithFrame:(CGRect)frame {
+    
+    //扫描范围与选择像素有关，通过像素计算是扫描范围确定到框内；
+    CGFloat scale1 = IPHONE_HEIGHT/IPHONE_WIDTH;
+    CGFloat scale2 = 1920.0f/1080.0f;
+    NSLog(@"%f,------%f",scale1,scale2);
+    if (scale1 < scale2) {
+        CGFloat fixHeight = IPHONE_WIDTH*1920.0f/1080.0f;
+        CGFloat fixPadding = (fixHeight - IPHONE_HEIGHT)/2.0f;
+        return CGRectMake((frame.origin.y + fixPadding)/fixHeight, frame.origin.x/IPHONE_WIDTH, frame.size.height/fixHeight, frame.size.width/IPHONE_WIDTH);
+    }
+    CGFloat fixWidth = IPHONE_HEIGHT*1080.0f/1920.0f;
+    CGFloat fixPadding = (fixWidth - IPHONE_WIDTH)/2.0f;
+    return CGRectMake(frame.origin.y/IPHONE_HEIGHT, (frame.origin.x + fixPadding)/fixWidth, frame.size.height/IPHONE_HEIGHT, frame.size.width/fixWidth);
 }
 
 //生成空缺layer 层；
