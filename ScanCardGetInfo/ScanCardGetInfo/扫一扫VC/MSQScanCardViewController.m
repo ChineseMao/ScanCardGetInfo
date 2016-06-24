@@ -213,6 +213,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
+    [self stopReading];
     _isReading = NO;
     if ([self startReading]) {
         
@@ -227,7 +228,7 @@
     }else {
         
         [LBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [self alertViewWithMessage:@"请打开摄像头" title:@"友情提示" object:nil];
+//        [self alertViewWithMessage:@"请打开摄像头" title:@"友情提示" object:nil];
     }
 }
 
@@ -364,7 +365,7 @@
 
 - (void)stopReading{
     //结束扫描
-    [self.captureSession stopRunning];
+    [_captureSession stopRunning];
 }
 
 - (void)moveScanLayer {
